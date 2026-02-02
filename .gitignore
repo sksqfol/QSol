@@ -1,0 +1,16 @@
+# SSH keys
+*.key
+*.pem
+*.pub
+id_*
+qsolismine*
+
+# Node / Hardhat
+node_modules/
+artifacts/
+cache/
+coverage/
+
+# OS / editor noise
+.DS_Store
+*.log
