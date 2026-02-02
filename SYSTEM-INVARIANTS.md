@@ -128,3 +128,98 @@ They are binding on:
 
 Computation is ephemeral.
 Attestation is permanent.
+=======
+# QSOL System Invariants (v1.0)
+
+## 1. Purpose
+
+This document defines the absolute, immutable invariants governing the QSOL system.
+
+All specifications, contracts, circuits, scripts, and deployments MUST comply
+with these invariants. No lower-level document or implementation may violate
+or weaken any invariant defined herein.
+
+These invariants are upstream of:
+- QSOL-MECHANICS.md
+- QSOL-ACTIVATION-SPEC.md
+- All smart contracts and verifier circuits
+
+---
+
+## 2. Scope
+
+System invariants define constraints on what the system **is allowed to do**,
+not how it is implemented.
+
+If any invariant is violated, the system is considered invalid.
+
+---
+
+## 3. Activation Boundary
+
+All invariants apply strictly after system activation.
+
+Before activation:
+- No collapse mechanics are callable
+- No authority may emerge
+
+After activation:
+- All invariants are enforced permanently
+- No upgrade path may bypass them
+
+---
+
+## 4. Absolute Invariants
+
+### 4.1 Fragment Set Invariant
+The set of valid Fragment NFTs is finite, immutable, and publicly verifiable.
+No fragment may be created, destroyed, duplicated, or altered after system activation.
+
+### 4.2 Deterministic Evaluation Invariant
+The result of a collapse evaluation for any fragment pair (A, B) is a pure,
+deterministic function of the pair’s immutable state commitments. The evaluation
+admits no randomness, oracle input, external state, or mutable parameters.
+
+### 4.3 Pair Consumption Invariant
+Each unordered fragment pair {A, B} may be submitted to the collapse function
+at most once. Any subsequent attempt to evaluate an already-consumed pair MUST
+fail and produce no state change.
+
+### 4.4 Authority Emergence Invariant
+An authority key may be minted if and only if a zero-knowledge proof verifies
+the following statement:
+
+“The immutable state commitments of fragments A and B satisfy the equation  
+(333 × (stateA + stateB)) mod FIELD = 1.”
+
+No other condition, signal, or privilege may cause authority emergence.
+
+### 4.5 Key Property Invariant
+Authority keys are non-transferable attestations. They MAY NOT be transferred,
+delegated, or reassigned. Authority keys MUST be destroyed upon any use and
+confer no rights beyond those explicitly defined by system mechanics.
+
+### 4.6 Temporal Finality Invariant
+All state transitions within the system are irreversible. No mechanism may undo,
+roll back, replay, or invalidate a fragment mint, pair consumption, authority key
+issuance, or authority key destruction.
+
+---
+
+## 5. Interpretive Prohibition
+
+No authority, contract upgrade, governance process, or external actor may:
+
+- Reinterpret these invariants
+- Extend these invariants
+- Override these invariants
+- Introduce exceptions to these invariants
+
+Only literal execution is permitted.
+
+---
+
+## Status
+
+Draft — pending cross-check against mechanics and activation specifications.
+>>>>>>> ed5d58c (Freeze QSOL system invariants v1.0)
